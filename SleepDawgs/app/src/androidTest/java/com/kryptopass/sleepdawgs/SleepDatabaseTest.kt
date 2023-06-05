@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.kryptopass.sleepdawgs.database.SleepDatabase
 import com.kryptopass.sleepdawgs.database.SleepDatabaseDao
 import com.kryptopass.sleepdawgs.database.SleepNight
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -45,7 +46,7 @@ class SleepDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetNight() {
+    fun insertAndGetNight() = runBlocking {
         val night = SleepNight()
         sleepDao.insert(night)
         val tonight = sleepDao.getTonight()

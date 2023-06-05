@@ -3,6 +3,7 @@ package com.kryptopass.sleepdawgs.sleepdetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kryptopass.sleepdawgs.database.SleepDatabaseDao
+import timber.log.Timber
 
 /**
  * This is pretty much boiler plate code for a ViewModel Factory.
@@ -17,6 +18,7 @@ class SleepDetailViewModelFactory(
         if (modelClass.isAssignableFrom(SleepDetailViewModel::class.java)) {
             return SleepDetailViewModel(sleepNightKey, dataSource) as T
         }
+        Timber.e("Unknown ViewModel class")
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

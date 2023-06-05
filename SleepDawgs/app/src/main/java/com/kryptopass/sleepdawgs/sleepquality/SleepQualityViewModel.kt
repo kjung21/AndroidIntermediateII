@@ -71,15 +71,15 @@ class SleepQualityViewModel(
      */
     fun onSetSleepQuality(quality: Int) {
         viewModelScope.launch {
-            // IO is a thread pool for running operations that access the disk, such as
-            // our Room database.
+            // IO is a thread pool for running operations that access disk,
+            // such as our Room database
             //withContext(Dispatchers.IO) {
                 val tonight = database.get(sleepNightKey) ?: return@launch
                 tonight.sleepQuality = quality
                 database.update(tonight)
             //}
 
-            // Setting this state variable to true will alert the observer and trigger navigation.
+            // setting this state variable to true will alert observer and trigger navigation
             _navigateToSleepTracker.value = true
         }
     }

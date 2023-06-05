@@ -27,14 +27,24 @@ android {
         }
     }
     buildFeatures {
+        buildConfig true
         dataBinding true
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    dataBinding {
+        enabled = true
+        enabledForTests = true
+    }
     kotlin {
         jvmToolchain(17)
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
     }
 }
 
@@ -52,15 +62,35 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
     implementation "androidx.room:room-ktx:$version_room"
     implementation "androidx.room:room-runtime:$version_room"
+    implementation "androidx.work:work-runtime-ktx:$version_work"
 
     implementation "com.google.android.material:material:$version_material"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
+    implementation "com.jakewharton.timber:timber:$version_timber"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
 
     annotationProcessor "androidx.room:room-compiler:$version_room"
+
+    kapt "androidx.lifecycle:lifecycle-compiler:$version_lifecycle"
     kapt "androidx.room:room-compiler:$version_room"
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // NOTE: explicitly for androidTest sources
+    androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$version_espresso"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$version_mockito_dexmaker"
+    androidTestImplementation "org.mockito:mockito-core:$version_mockito"
+
+    // NOTE: used in both test and androidTest sources
+    debugImplementation "androidx.fragment:fragment-testing:$version_fragment"
+    debugImplementation "androidx.test.ext:junit:$version_test"
+    debugImplementation "junit:junit:$version_junit"
+    debugImplementation "org.hamcrest:hamcrest:$version_hamcrest"
+    debugImplementation "org.hamcrest:hamcrest-library:$version_hamcrest"
+    debugImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
+
+    // NOTE: explicitly for test sources
+    testImplementation "androidx.arch.core:core-testing:$version_arch_testing"
+    testImplementation "androidx.test:core-ktx:$version_test_core"
+    testImplementation "org.robolectric:robolectric:4.10.3"
 }

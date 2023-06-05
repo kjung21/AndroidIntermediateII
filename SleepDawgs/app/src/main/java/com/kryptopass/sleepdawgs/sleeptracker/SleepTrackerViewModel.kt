@@ -62,7 +62,7 @@ class SleepTrackerViewModel(
      * If there are any nights in the database, show the CLEAR button.
      */
     val clearButtonVisible = nights.map {
-        it?.isNotEmpty()
+        it.isNotEmpty()
     }
 
     /**
@@ -169,8 +169,7 @@ class SleepTrackerViewModel(
      */
     fun onStartTracking() {
         viewModelScope.launch {
-            // Create a new night, which captures the current time,
-            // and insert it into the database.
+            // create new night, which captures current time, and insert it into database
             val newNight = SleepNight()
             insert(newNight)
             tonight.value = getTonightFromDatabase()
@@ -182,18 +181,17 @@ class SleepTrackerViewModel(
      */
     fun onStopTracking() {
         viewModelScope.launch {
-            // In Kotlin, the return@label syntax is used for specifying which function among
-            // several nested ones this statement returns from.
-            // In this case, we are specifying to return from launch(),
-            // not the lambda.
+            // the return@label syntax is used for specifying
+            // which function among several nested ones this statement returns from
+            // in this case, we are specifying to return from launch(), not the lambda
             val oldNight = tonight.value ?: return@launch
 
-            // Update the night in the database to add the end time.
+            // update night in database to add end time
             oldNight.endTimeMilli = System.currentTimeMillis()
 
             update(oldNight)
 
-            // Set state to navigate to the SleepQualityFragment.
+            // set state to navigate to SleepQualityFragment
             _navigateToSleepQuality.value = oldNight
         }
     }
@@ -203,14 +201,13 @@ class SleepTrackerViewModel(
      */
     fun onClear() {
         viewModelScope.launch {
-            // Clear the database table.
             clear()
 
-            // And clear tonight since it's no longer in the database
+            // clear tonight since it is no longer in database
             tonight.value = null
         }
 
-        // Show a snackbar message, because it's friendly.
+        // show a snackbar message, because it is friendly
         _showSnackbarEvent.value = true
     }
 
