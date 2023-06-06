@@ -11,23 +11,24 @@ import androidx.navigation.fragment.findNavController
 import com.kryptopass.sleepdawgs.R
 import com.kryptopass.sleepdawgs.database.SleepDatabase
 import com.kryptopass.sleepdawgs.databinding.FragmentSleepQualityBinding
+import timber.log.Timber
 
 /**
- * Fragment that displays a list of clickable icons,
- * each representing a sleep quality rating.
- * Once the user taps an icon, the quality is set in the current sleepNight
- * and the database is updated.
+ * Fragment that displays a list of clickable icons, each representing a sleep quality rating.
+ * Once user taps an icon, quality is set in current sleepNight and database is updated.
  */
 class SleepQualityFragment : Fragment() {
 
     /**
-     * Called when the Fragment is ready to display content to the screen.
+     * Called when Fragment is ready to display content to screen.
      * This function uses DataBindingUtil to inflate R.layout.fragment_sleep_quality.
      */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Timber.i("onCreateView called")
 
         // get reference to binding object and inflate fragment views
         val binding: FragmentSleepQualityBinding = DataBindingUtil.inflate(

@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.kryptopass.devbytes.database.getDatabase
 import com.kryptopass.devbytes.repository.VideosRepository
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * DevByteViewModel designed to store and manage UI-related data in a lifecycle conscious way.
@@ -40,6 +41,7 @@ class DevByteViewModel(application: Application) : AndroidViewModel(application)
                 @Suppress("UNCHECKED_CAST")
                 return DevByteViewModel(app) as T
             }
+            Timber.e("Unknown ViewModel class")
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }

@@ -22,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.kryptopass.gdg.R
 
 private const val LOCATION_PERMISSION_REQUEST = 1
-
 private const val LOCATION_PERMISSION = "android.permission.ACCESS_FINE_LOCATION"
 
 class GdgListFragment : Fragment(), MenuProvider {
@@ -141,7 +140,7 @@ class GdgListFragment : Fragment(), MenuProvider {
         }.build()
         val callback = object: LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                val location = locationResult?.lastLocation ?: return
+                val location = locationResult.lastLocation ?: return
                 viewModel.onLocationUpdated(location)
             }
         }

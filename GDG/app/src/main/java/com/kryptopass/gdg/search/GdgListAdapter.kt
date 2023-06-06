@@ -9,7 +9,8 @@ import com.kryptopass.gdg.network.GdgChapter
 import com.kryptopass.gdg.search.GdgListAdapter.GdgListViewHolder
 import com.kryptopass.gdg.databinding.ListItemBinding
 
-class GdgListAdapter(private val clickListener: GdgClickListener): ListAdapter<GdgChapter, GdgListViewHolder>(DiffCallback){
+class GdgListAdapter(private val clickListener: GdgClickListener) :
+    ListAdapter<GdgChapter, GdgListViewHolder>(DiffCallback) {
     companion object DiffCallback : DiffUtil.ItemCallback<GdgChapter>() {
         override fun areItemsTheSame(oldItem: GdgChapter, newItem: GdgChapter): Boolean {
             return oldItem === newItem

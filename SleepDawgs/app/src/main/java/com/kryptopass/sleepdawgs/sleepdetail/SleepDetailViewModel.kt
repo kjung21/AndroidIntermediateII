@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kryptopass.sleepdawgs.database.SleepDatabaseDao
 import com.kryptopass.sleepdawgs.database.SleepNight
+import timber.log.Timber
 
 /**
  * ViewModel for SleepQualityFragment.
@@ -19,26 +20,20 @@ class SleepDetailViewModel(
      * Hold a reference to SleepDatabase via its SleepDatabaseDao.
      */
     val database = dataSource
-    /*
-    /** Coroutine setup variables */
 
-    /**
-     * viewModelJob allows us to cancel all coroutines started by this ViewModel.
-     */
-    private val viewModelJob = Job()
-    */
     private val night = MediatorLiveData<SleepNight>()
 
     fun getNight() = night
 
     init {
+        Timber.i("init called")
         night.addSource(database.getNightWithId(sleepNightKey), night::setValue)
     }
 
     /**
      * Variable that tells the fragment whether it should navigate to [SleepTrackerFragment].
-     * This is `private` because we don't want to expose the ability to set [MutableLiveData] to
-     * the [Fragment]
+     * This is `private` because we don't want to expose the ability
+     * to set [MutableLiveData] to the [Fragment]
      */
     private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
 
@@ -47,16 +42,6 @@ class SleepDetailViewModel(
      */
     val navigateToSleepTracker: LiveData<Boolean?>
         get() = _navigateToSleepTracker
-    /*
-    /**
-     * Cancels all coroutines when the ViewModel is cleared, to cleanup any pending work.
-     * onCleared() gets called when the ViewModel is destroyed.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-    */
 
     /**
      * Call this immediately after navigating to [SleepTrackerFragment]

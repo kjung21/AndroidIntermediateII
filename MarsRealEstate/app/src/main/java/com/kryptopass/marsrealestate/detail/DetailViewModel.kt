@@ -8,10 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.kryptopass.marsrealestate.R
 import com.kryptopass.marsrealestate.network.MarsProperty
+import timber.log.Timber
 
 /**
- *  The [ViewModel] associated with the [DetailFragment], containing information about the selected
- *  [MarsProperty].
+ * The [ViewModel] associated with the [DetailFragment],
+ * containing information about the selected [MarsProperty].
  */
 class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidViewModel(app) {
 
@@ -20,11 +21,12 @@ class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidVie
         get() = _selectedProperty
 
     init {
+        Timber.i("init called!")
         _selectedProperty.value = marsProperty
     }
 
-    // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
-    // or rental price.
+    // displayPropertyPrice formatted Transformation Map LiveData,
+    // which displays the sale or rental price
     val displayPropertyPrice = selectedProperty.map {
         app.applicationContext.getString(
             when (it.isRental) {
@@ -33,8 +35,8 @@ class DetailViewModel(marsProperty: MarsProperty, app: Application) : AndroidVie
             }, it.price)
     }
 
-    // The displayPropertyType formatted Transformation Map LiveData, which displays the
-    // "For Rent/Sale" String
+    // displayPropertyType formatted Transformation Map LiveData,
+    // which displays the "For Rent/Sale" String
     val displayPropertyType = selectedProperty.map {
         app.applicationContext.getString(R.string.display_type,
             app.applicationContext.getString(

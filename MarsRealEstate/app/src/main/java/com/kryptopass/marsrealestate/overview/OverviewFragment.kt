@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.kryptopass.marsrealestate.R
 import com.kryptopass.marsrealestate.databinding.FragmentOverviewBinding
 import com.kryptopass.marsrealestate.network.MarsApiFilter
+import timber.log.Timber
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
@@ -30,56 +31,33 @@ class OverviewFragment : Fragment(), MenuProvider {
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
 
+        Timber.i("onCreateView called!")
+
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
-        // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
-        // tells the viewModel when our property is clicked
+        // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda
+        // that tells the viewModel when our property is clicked
         binding.photosGrid.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayPropertyDetails(it)
         })
 
-        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
-        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
-        // for another navigation event.
+        // Observe navigateToSelectedProperty LiveData and Navigate when it is not null
+        // After navigating, call displayPropertyDetailsComplete()
+        // so that the ViewModel is ready for another navigation event.
         viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner) {
             if (null != it) {
-                // Must find the NavController from the Fragment
                 this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
-                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+                // let ViewModel know we have made navigate call to prevent multiple navigation
                 viewModel.displayPropertyDetailsComplete()
             }
         }
 
-        // setHasOptionsMenu(true)
-
         return binding.root
     }
-
-//    /**
-//     * Inflates the overflow menu that contains filtering options.
-//     */
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.overflow_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//    /**
-//     * Updates the filter in the [OverviewViewModel] when the menu items are selected from the
-//     * overflow menu.
-//     */
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        viewModel.updateFilter(
-//            when (item.itemId) {
-//                R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
-//                R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
-//                else -> MarsApiFilter.SHOW_ALL
-//            }
-//        )
-//        return true
-//    }
 
     /**
      * Inflates the overflow menu that contains filtering options.
@@ -89,8 +67,7 @@ class OverviewFragment : Fragment(), MenuProvider {
     }
 
     /**
-     * Updates the filter in the [OverviewViewModel] when the menu items are selected from the
-     * overflow menu.
+     * Updates filter in [OverviewViewModel] when menu items are selected from overflow menu.
      */
     override fun onMenuItemSelected(item: MenuItem): Boolean {
         viewModel.updateFilter(

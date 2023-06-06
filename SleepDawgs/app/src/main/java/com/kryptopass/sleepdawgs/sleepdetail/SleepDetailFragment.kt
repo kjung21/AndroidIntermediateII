@@ -12,20 +12,20 @@ import androidx.navigation.fragment.findNavController
 import com.kryptopass.sleepdawgs.R
 import com.kryptopass.sleepdawgs.database.SleepDatabase
 import com.kryptopass.sleepdawgs.databinding.FragmentSleepDetailBinding
-
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [SleepDetailFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [SleepDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * [SleepDetailFragment.OnFragmentInteractionListener] interface to handle interaction events.
+ * Use [SleepDetailFragment.newInstance] factory method to create an instance of this fragment.
  */
 class SleepDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        Timber.i("SleepDetailFragment onCreateView called")
 
         // get reference to binding object and inflate fragment views
         val binding: FragmentSleepDetailBinding = DataBindingUtil.inflate(

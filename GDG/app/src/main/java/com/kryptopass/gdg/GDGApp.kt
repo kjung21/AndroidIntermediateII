@@ -1,4 +1,4 @@
-package com.kryptopass.sleepdawgs
+package com.kryptopass.gdg
 
 import android.app.Application
 import android.os.Build
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class SleepApp : Application() {
+class GDGApp : Application() {
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
     private fun delayedInit() {

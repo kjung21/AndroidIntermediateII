@@ -16,14 +16,14 @@ import com.kryptopass.sleepdawgs.databinding.FragmentSleepTrackerBinding
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * A fragment with buttons to record start and end times for sleep, which are saved in
- * a database. Cumulative data is displayed in a simple scrollable TextView.
- * (Because we have not learned about RecyclerView yet.)
+ * A fragment with buttons to record start and end times for sleep,
+ * which are saved in a database.
+ * Cumulative data is displayed in a simple scrollable TextView.
  */
 class SleepTrackerFragment : Fragment() {
 
     /**
-     * Called when the Fragment is ready to display content to the screen.
+     * Called when Fragment is ready to display content to screen.
      * This function uses DataBindingUtil to inflate R.layout.fragment_sleep_quality.
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +59,7 @@ class SleepTrackerFragment : Fragment() {
         })
 
         // add an Observer on state variable for Navigating when STOP button is pressed
-        viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
+        viewModel.navigateToSleepQuality.observe(viewLifecycleOwner) { night ->
             night?.let {
                 // need to get navController from this, because button is not ready,
                 // and it just has to be a view
@@ -70,13 +70,14 @@ class SleepTrackerFragment : Fragment() {
                 // if we press stop multiple times followed by back
                 // also: https://stackoverflow.com/questions/28929637/difference-and-uses-of-oncreate-oncreateview-and-onactivitycreated-in-fra
                 this.findNavController().navigate(
-                        SleepTrackerFragmentDirections
-                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
+                    SleepTrackerFragmentDirections
+                        .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId)
+                )
                 // reset state to make sure we only navigate once,
                 // even if the device has a configuration change
                 viewModel.doneNavigating()
             }
-        })
+        }
 
         viewModel.navigateToSleepDataQuality.observe(viewLifecycleOwner) { night ->
             night?.let {
@@ -103,11 +104,11 @@ class SleepTrackerFragment : Fragment() {
 
         binding.sleepList.adapter = adapter
 
-        viewModel.nights.observe(viewLifecycleOwner, Observer {
+        viewModel.nights.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.addHeaderAndSubmitList(it)
             }
-        })
+        }
 
         return binding.root
     }
